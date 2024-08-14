@@ -1,23 +1,13 @@
 #define enA 10//Enable1 L298 Pin enA
-
 #define in1 9 //Motor1 L298 Pin in1
-
 #define in2 8 //Motor1 L298 Pin in2
-
 #define in3 7 //Motor2 L298 Pin in3
-
 #define in4 6 //Motor2 L298 Pin in4
-
 #define enB 5 //Enable2 L298 Pin enB
-
 #define ir_R A0 //this sensor for getting distance for fire A0 A1 A2
-
 #define ir_F A1
-
 #define ir_L A2
-
 #define servo A4 //TO getting servo motor values
-
 #define pump A5 
 
 int Speed = 160; // Write The Duty Cycle 0 to 255 Enable for Motor Speed
@@ -135,3 +125,40 @@ digitalWrite(pin, HIGH);
 delayMicroseconds(pwm);
 digitalWrite(pin, LOW);
 delay(50);
+
+// Movement functions of my robot
+
+void forword(){ //forword
+digitalWrite(in1, HIGH); //Right Motor forword Pin
+digitalWrite(in2, LOW); //Right Motor backword Pin
+digitalWrite(in3, LOW); //Left Motor backword Pin
+digitalWrite(in4, HIGH); //Left Motor forword Pin
+}
+
+void backword(){ //backword
+digitalWrite(in1, LOW); //Right Motor forword Pin
+digitalWrite(in2, HIGH); //Right Motor backword Pin
+digitalWrite(in3, HIGH); //Left Motor backword Pin
+digitalWrite(in4, LOW); //Left Motor forword Pin
+}
+
+void turnRight(){ //turnRight
+digitalWrite(in1, LOW); //Right Motor forword Pin
+digitalWrite(in2, HIGH); //Right Motor backword Pin
+digitalWrite(in3, LOW); //Left Motor backword Pin
+digitalWrite(in4, HIGH); //Left Motor forword Pin
+}
+
+void turnLeft(){ //turnLeft
+digitalWrite(in1, HIGH); //Right Motor forword Pin
+digitalWrite(in2, LOW); //Right Motor backword Pin
+digitalWrite(in3, HIGH); //Left Motor backword Pin
+digitalWrite(in4, LOW); //Left Motor forword Pin
+}
+
+void Stop(){ //stop
+digitalWrite(in1, LOW); //Right Motor forword Pin
+digitalWrite(in2, LOW); //Right Motor backword Pin
+digitalWrite(in3, LOW); //Left Motor backword Pin
+digitalWrite(in4, LOW); //Left Motor forword Pin
+}
