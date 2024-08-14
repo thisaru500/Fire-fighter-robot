@@ -36,4 +36,102 @@ pinMode(enB, OUTPUT); // declare as output for L298 Pin enB
 pinMode(servo, OUTPUT);
 pinMode(pump, OUTPUT);
 for (int angle = 90; angle <= 140; angle += 5) {
+
+servoPulse(servo, angle); 
+
+}
+
+for (int angle = 140; angle >= 40; angle -= 5) {
 servoPulse(servo, angle); }
+for (int angle = 40; angle <= 95; angle += 5) {
+servoPulse(servo, angle); }
+analogWrite(enA, Speed); // Write The Duty Cycle 0 to 255 Enable Pin A for Motor1 SpeedanalogWrite(enB, Speed); // Write The Duty Cycle 0 to 255 Enable Pin B for Motor2 Speeddelay(500);
+}
+void loop(){
+s1 = analogRead(ir_R);
+s2 = analogRead(ir_F);
+s3 = analogRead(ir_L);
+//=============================================================
+// Auto Control
+//=============================================================
+Serial.print(s1);
+Serial.print("\t");
+Serial.print(s2);
+Serial.print("\t");
+Serial.println(s3);
+delay(50);
+if(s1<250){
+Stop();
+digitalWrite(pump, 1);
+for(int angle = 90; angle >= 40; angle -= 3){
+servoPulse(servo, angle);
+}
+for(int angle = 40; angle <= 90; angle += 3){
+servoPulse(servo, angle);
+}
+}
+else if(s2<350){
+Stop();
+digitalWrite(pump, 1);
+for(int angle = 90; angle <= 140; angle += 3){
+servoPulse(servo, angle);
+}
+for(int angle = 140; angle >= 40; angle -= 3){
+servoPulse(servo, angle);
+}
+for(int angle = 40; angle <= 90; angle += 3){
+servoPulse(servo, angle);
+}
+}
+else if(s3<250){
+Stop();
+
+digitalWrite(pump, 1);
+for(int angle = 90; angle <= 140; angle += 3){
+servoPulse(servo, angle);
+}
+for(int angle = 140; angle >= 90; angle -= 3){
+servoPulse(servo, angle);
+}
+}
+else if(s1>=251 && s1<=700){
+digitalWrite(pump, 0);
+backword();
+delay(100);
+turnRight();
+delay(200);
+}
+else if(s2>=251 && s2<=800){
+digitalWrite(pump, 0);
+forword();
+}
+else if(s3>=251 && s3<=700){
+digitalWrite(pump, 0);
+backword();
+
+delay(100);
+turnRight();
+delay(200);
+}
+else if(s2>=251 && s2<=800){
+digitalWrite(pump, 0);
+forword();
+}
+else if(s3>=251 && s3<=700){
+digitalWrite(pump, 0);
+backword();
+delay(100);
+turnLeft();
+delay(200);
+}else{
+digitalWrite(pump, 0);
+Stop();
+}
+delay(10);
+}
+void servoPulse (int pin, int angle){
+int pwm = (angle*11) + 500; // Convert angle to microseconds
+digitalWrite(pin, HIGH);
+delayMicroseconds(pwm);
+digitalWrite(pin, LOW);
+delay(50);
